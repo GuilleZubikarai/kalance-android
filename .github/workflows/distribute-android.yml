@@ -1,20 +1,20 @@
-name: Distribute official Android 1.4.0
+name: Verify official Android 1.4.0 distribution
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  distribute:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: GuilleZubikarai/kalance-android
     steps:
-      - name: Verify and publish the existing signed APK
+      - name: Verify public APK and checksum
         shell: bash
         run: |
           set -euo pipefail
@@ -22,28 +22,14 @@ jobs:
           apk=Kalance-1.4.0.apk
           expected_sha=142659c0b396e34689fb511c65e2c61e2150e624f5228131f9db936159a677ad
           expected_size=25157333
-          test "$(gh release view "$tag" --json isDraft --jq .isDraft)" = true
-          if ! curl --fail --location --silent --show-error \
-            --user-agent "Mozilla/5.0 (compatible; KalanceOfficialDistribution/1.0)" \
-            https://downloads.kalance.app/android/kalance-1.4.0.apk --output "$apk"; then
-            # Temporary transport of the identical public APK when the origin
-            # rejects GitHub runner traffic; both paths require the same hash.
-            curl --fail --location --silent --show-error \
-              https://raw.githubusercontent.com/GuilleZubikarai/kalance-android/772084f31d880269082a73a511473b15b6b84f0c/distribution/Kalance-1.4.0.apk \
-              --output "$apk"
-          fi
-          test "$(stat -c %s "$apk")" = "$expected_size"
-          printf '%s  %s\n' "$expected_sha" "$apk" > SHA256SUMS
-          sha256sum --check SHA256SUMS
-          gh release upload "$tag" "$apk" SHA256SUMS --clobber
-          release_json=$(gh api "repos/$GH_REPO/releases/407111818")
-          test "$(jq -r '.draft' <<< "$release_json")" = true
+          release_json=$(gh api "repos/$GH_REPO/releases/tags/$tag")
+          test "$(jq -r '.draft' <<< "$release_json")" = false
+          test "$(jq -r '.prerelease' <<< "$release_json")" = false
           test "$(jq '[.assets[] | select(.name == "Kalance-1.4.0.apk" and .size == 25157333 and .state == "uploaded")] | length' <<< "$release_json")" = 1
           test "$(jq '[.assets[] | select(.name == "SHA256SUMS" and .size == 84 and .state == "uploaded")] | length' <<< "$release_json")" = 1
-          mkdir verify
-          gh release download "$tag" --dir verify --pattern "$apk" --pattern SHA256SUMS
-          (cd verify && sha256sum --check SHA256SUMS)
-          cmp SHA256SUMS verify/SHA256SUMS
-          gh release edit "$tag" --draft=false --latest
-          test "$(gh api "repos/$GH_REPO/releases/latest" --jq .tag_name)" = "$tag"
-          rm -rf "$apk" SHA256SUMS verify
+          gh release download "$tag" --pattern "$apk" --pattern SHA256SUMS
+          test "$(stat -c %s "$apk")" = "$expected_size"
+          printf '%s  %s\n' "$expected_sha" "$apk" > expected-checksum
+          cmp expected-checksum SHA256SUMS
+          sha256sum --check SHA256SUMS
+          rm "$apk" SHA256SUMS expected-checksum
