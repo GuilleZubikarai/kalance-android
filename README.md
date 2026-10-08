@@ -26,6 +26,12 @@ SHA-256: `142659c0b396e34689fb511c65e2c61e2150e624f5228131f9db936159a677ad`
 
 La sección **Releases** contiene una copia inmutable del mismo APK firmado. Comprueba el hash antes de instalar si has descargado el archivo desde un espejo.
 
+## Guía de raciones
+
+[Guía práctica de raciones en español e inglés](docs/raciones-es-en.pdf).
+Recurso gratuito y sin registro para convertir los valores de la etiqueta a
+la cantidad que has comido.
+
 ## Enlaces
 
 - [Crear una cuenta gratis](https://kalance.app/login?locale=es&mode=register&utm_source=github&utm_medium=repository&utm_campaign=android_release)
