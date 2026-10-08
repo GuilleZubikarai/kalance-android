@@ -23,7 +23,8 @@ jobs:
           expected_sha=142659c0b396e34689fb511c65e2c61e2150e624f5228131f9db936159a677ad
           expected_size=25157333
           test "$(gh release view "$tag" --json isDraft --jq .isDraft)" = true
-          curl --fail --location --retry 2 --silent --show-error \
+          curl --fail-with-body --location --retry 2 --silent --show-error \
+            --user-agent "Mozilla/5.0 (compatible; KalanceOfficialDistribution/1.0)" \
             https://downloads.kalance.app/android/kalance-1.4.0.apk --output "$apk"
           test "$(stat -c %s "$apk")" = "$expected_size"
           printf '%s  %s\n' "$expected_sha" "$apk" > SHA256SUMS
