@@ -36,7 +36,7 @@ jobs:
           printf '%s  %s\n' "$expected_sha" "$apk" > SHA256SUMS
           sha256sum --check SHA256SUMS
           gh release upload "$tag" "$apk" SHA256SUMS --clobber
-          release_json=$(gh api "repos/$GH_REPO/releases/tags/$tag")
+          release_json=$(gh api "repos/$GH_REPO/releases/407111818")
           test "$(jq -r '.draft' <<< "$release_json")" = true
           test "$(jq '[.assets[] | select(.name == "Kalance-1.4.0.apk" and .size == 25157333 and .state == "uploaded")] | length' <<< "$release_json")" = 1
           test "$(jq '[.assets[] | select(.name == "SHA256SUMS" and .size == 84 and .state == "uploaded")] | length' <<< "$release_json")" = 1
