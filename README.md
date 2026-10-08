@@ -6,19 +6,23 @@ Kalance es un diario privado de calorías y macronutrientes, sin anuncios. Permi
 
 ## Descargar
 
-- [Descarga oficial de Kalance 1.3.1](https://downloads.kalance.app/android/kalance-1.3.1.apk)
+- [Descarga oficial de Kalance 1.4.0](https://downloads.kalance.app/android/kalance-1.4.0.apk)
 - [Página de versiones y ayuda de instalación](https://kalance.app/es/releases)
-- [Instalar y recibir actualizaciones con Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%2Fhttps%3A%2F%2Fgithub.com%2Fkattulus1997%2Fkalance-android)
+- [Instalar y recibir actualizaciones con Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%2Fhttps%3A%2F%2Fgithub.com%2FGuilleZubikarai%2Fkalance-android)
 
-Versión: `1.3.1` (`versionCode 9`)
+Versión: `1.4.0` (`versionCode 12`)
 Paquete: `app.kalance.android`  
-SHA-256: `992aa78445b8438ed2e245342cb830f4ce4500cd987f5c7db7816ac5bae1a07c`
+SHA-256: `142659c0b396e34689fb511c65e2c61e2150e624f5228131f9db936159a677ad`
 
-## Novedades de 1.3.1
+## Novedades de 1.4.0
 
-- Mantener pulsados los controles `+` o `−` acelera los cambios de cantidades,
-  calorías y macronutrientes.
-- Los días sin consumo registrado ya no reducen la media del historial.
+- Busca e importa alimentos desde el diario para guardar tu primera comida con
+  menos pasos.
+- Reutiliza y ajusta la última cantidad que registraste para cada alimento.
+- Consulta tus últimos siete días de actividad.
+- Descubre las opciones de planificación e historial de Kalance Completo
+  después de tres días de uso.
+- Correcciones de acceso a la cuenta e incorporación desde Android.
 
 La sección **Releases** contiene una copia inmutable del mismo APK firmado. Comprueba el hash antes de instalar si has descargado el archivo desde un espejo.
 
